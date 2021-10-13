@@ -12,6 +12,15 @@ def main_page():
     return render_template('index.html', posts=posts)
 
 
+@app.route('/posts/<int:postid>/')
+def post_page(postid):
+    posts = get_posts()
+    for post in posts:
+        if postid == post['pk']:
+            return render_template('post.html', post=post)
+    return 'Not found', 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
