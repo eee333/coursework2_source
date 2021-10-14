@@ -29,7 +29,7 @@ def search_page():
         posts_found = []
         posts = get_posts()
         for post in posts:
-            if search_txt in post['content']:
+            if search_txt.lower() in post['content'].lower():
                 posts_found.append(post)
         return render_template('search.html', posts=posts_found)
 
