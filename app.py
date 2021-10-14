@@ -36,6 +36,18 @@ def search_page():
     return render_template('search.html', posts=posts_found, search_txt=search_txt)
 
 
+@app.route('/users/<username>/')
+def user_page(username):
+    posts = get_posts()
+    posts_list = []
+    for post in posts:
+        if post['poster_name'] == username:
+            posts_list.append(post)
+    if posts_list:
+        return render_template('user-feed.html', posts=posts_list)
+    return 'Not found', 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
