@@ -31,7 +31,7 @@ def search_page():
         for post in posts:
             if search_txt.lower() in post['content'].lower():
                 posts_found.append(post)
-        return render_template('search.html', posts=posts_found)
+        return render_template('search.html', posts=posts_found, search_txt=search_txt)
 
 
 if __name__ == '__main__':

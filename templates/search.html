@@ -25,10 +25,10 @@
   </header>
   <main class="container">
     <div class="search">
-      <form action="/" class="search__form">
-        <input type="search" class="search__input" name="search_text">
+      <form action="" class="search__form">
+        <input type="search" class="search__input" name="s" value="{{ search_txt }}">
       </form>
-      <p class="search__results">Найдено постов: 11</p>
+      <p class="search__results">Найдено постов: {{ posts|length }}</p>
     </div>
     <section class="items">
       {% for post in posts %}
