@@ -12,12 +12,13 @@ def main_page():
     return render_template('index.html', posts=posts)
 
 
-@app.route('/posts/<int:postid>/')
-def post_page(postid):
+@app.route('/posts/<int:post_id>/')
+def post_page(post_id):
     posts = get_posts()
     for post in posts:
-        if postid == post['pk']:
-            return render_template('post.html', post=post)
+        if post_id == post['pk']:
+            comment_list = get_comments(post_id)
+            return render_template('post.html', post=post, comments=comment_list)
     return 'Not found', 404
 
 
