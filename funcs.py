@@ -9,6 +9,9 @@ def get_posts():
         for post in posts:
             comment_count = len(get_comments(post['pk']))
             post['comment_count'] = comment_count
+            post['content_short'] = comment_count
+            if '#' in post['content']:
+                post['content'] = make_hash(post['content'])
         return posts
 
 
@@ -22,4 +25,17 @@ def get_comments(post_id):
     return comment_list
 
 
+def make_link(txt):
+    link = f'<a href="/tag/{txt[1:]}">{txt}</a>'
+    return link
+
+
+def make_hash(content):
+    words = content.split()
+    words_new = []
+    for word in words:
+        if '#' in word:
+            word = make_link(word)
+        words_new.append(word)
+    return ' '.join(words_new)
 
