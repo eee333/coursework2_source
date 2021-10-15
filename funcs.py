@@ -6,6 +6,9 @@ import json
 def get_posts():
     with open('data/data.json', encoding="utf-8") as f:
         posts = json.load(f)
+        for post in posts:
+            comment_count = len(get_comments(post['pk']))
+            post['comment_count'] = comment_count
         return posts
 
 
