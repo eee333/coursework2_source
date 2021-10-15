@@ -26,11 +26,14 @@ def post_page(post_id):
 def search_page():
     search_txt = request.args.get('s')
     posts_found = []
+    posts_max = 10 # Максимальное количество найденных постов на странице
     if search_txt:
         posts = get_posts()
         for post in posts:
             if search_txt.lower() in post['content'].lower():
                 posts_found.append(post)
+                if len(posts_found) == posts_max:
+                    break
     else:
         search_txt = ''
     return render_template('search.html', posts=posts_found, search_txt=search_txt)
