@@ -9,7 +9,7 @@ def get_posts():
         for post in posts:
             comment_count = len(get_comments(post['pk']))
             post['comment_count'] = comment_count
-            post['content_short'] = cut_comment(post['content'])
+            post['content_short'] = cut_content(post['content'])
             if '#' in post['content_short']:
                 post['content_short'] = make_hash(post['content_short'])
         return posts
@@ -44,6 +44,7 @@ def make_link(txt):
 
 
 def make_hash(content):
+    # Добавляем ссылки ко всем хэшеэгам
     words = content.split()
     words_new = []
     for word in words:
@@ -53,12 +54,13 @@ def make_hash(content):
     return ' '.join(words_new)
 
 
-def cut_comment(txt):
+def cut_content(txt):
+    # Обрезаем текст до 50 символов, и удаляем обрезанное слово в конце.
     symbols = ',.!?: '
-    comment_short = txt[:50]
+    content_short = txt[:50]
     if txt[:51] not in symbols:
-        comment_short = comment_short[:comment_short.rfind(' ')]
-    return comment_short
+        content_short = content_short[:content_short.rfind(' ')]
+    return content_short
 
 
 def get_bookmarks():
