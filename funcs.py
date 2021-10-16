@@ -9,7 +9,7 @@ def get_posts():
         for post in posts:
             comment_count = len(get_comments(post['pk']))
             post['comment_count'] = comment_count
-            post['content_short'] = comment_count
+            post['content_short'] = cut_comment(post['content'])
             if '#' in post['content']:
                 post['content'] = make_hash(post['content'])
         return posts
@@ -38,4 +38,12 @@ def make_hash(content):
             word = make_link(word)
         words_new.append(word)
     return ' '.join(words_new)
+
+
+def cut_comment(txt):
+    symbols = ',.!?: '
+    comment_short = txt[:50]
+    if txt[:51] not in symbols:
+        comment_short = comment_short[:comment_short.rfind(' ')]
+    return comment_short
 
