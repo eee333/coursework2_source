@@ -55,7 +55,7 @@ def tag_page(tagname):
     posts = get_posts()
     posts_list = []
     for post in posts:
-        if ('#' + tagname) in post['content']:
+        if ('#' + tagname + ' ') in post['content']:
             posts_list.append(post)
     if posts_list:
         return render_template('tag.html', posts=posts_list)
