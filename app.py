@@ -50,6 +50,19 @@ def user_page(username):
     return 'Not found', 404
 
 
+@app.route('/tag/<tagname>/')
+def tag_page(tagname):
+    posts = get_posts()
+    posts_list = []
+    for post in posts:
+        if ('#' + tagname) in post['content']:
+            posts_list.append(post)
+    if posts_list:
+        return render_template('tag.html', posts=posts_list)
+    return 'Not found', 404
+
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
