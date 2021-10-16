@@ -87,6 +87,19 @@ def del_bookmark(post_id):
     return redirect('/', code=302)
 
 
+@app.route('/bookmarks/')
+def bookmark_page():
+    posts = get_posts()
+    bookmarks = get_bookmarks()
+    posts_list = []
+    for post in posts:
+        if post['pk'] in bookmarks:
+            posts_list.append(post)
+    if posts_list:
+        return render_template('bookmarks.html', posts=posts_list)
+    return 'Not found', 404
+
+
 if __name__ == '__main__':
     app.run(debug=True)
 
