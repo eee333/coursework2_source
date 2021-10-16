@@ -10,8 +10,6 @@ def get_posts():
             comment_count = len(get_comments(post['pk']))
             post['comment_count'] = comment_count
             post['content_short'] = cut_comment(post['content'])
-            if '#' in post['content']:
-                post['content'] = make_hash(post['content'])
             if '#' in post['content_short']:
                 post['content_short'] = make_hash(post['content_short'])
         return posts
@@ -22,6 +20,8 @@ def get_one_post(post_id):
         posts = json.load(f)
     for post in posts:
         if post['pk'] == post_id:
+            if '#' in post['content']:
+                post['content'] = make_hash(post['content'])
             comment_list = get_comments(post_id)
             post['comments'] = comment_list
             return post
