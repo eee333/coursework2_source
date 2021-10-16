@@ -12,7 +12,20 @@ def get_posts():
             post['content_short'] = cut_comment(post['content'])
             if '#' in post['content']:
                 post['content'] = make_hash(post['content'])
+            if '#' in post['content_short']:
+                post['content_short'] = make_hash(post['content_short'])
         return posts
+
+
+def get_one_post(post_id):
+    with open('data/data.json', encoding="utf-8") as f:
+        posts = json.load(f)
+    for post in posts:
+        if post['pk'] == post_id:
+            comment_list = get_comments(post_id)
+            post['comments'] = comment_list
+            return post
+    return False
 
 
 def get_comments(post_id):
