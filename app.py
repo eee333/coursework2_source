@@ -18,7 +18,8 @@ def post_page(post_id):
     if post_id:
         post = get_one_post(post_id)
         if post:
-            return render_template('post.html', post=post)
+            bookmarks = get_bookmarks()
+            return render_template('post.html', post=post, bookmarks=bookmarks)
     return 'Not found', 404
 
 
@@ -27,6 +28,7 @@ def search_page():
     search_txt = request.args.get('s')
     posts_found = []
     posts_max = 10 # Максимальное количество найденных постов на странице
+    bookmarks = get_bookmarks()
     if search_txt:
         posts = get_posts()
         for post in posts:
@@ -36,30 +38,32 @@ def search_page():
                     break
     else:
         search_txt = ''
-    return render_template('search.html', posts=posts_found, search_txt=search_txt)
+    return render_template('search.html', posts=posts_found, search_txt=search_txt, bookmarks=bookmarks)
 
 
 @app.route('/users/<username>/')
 def user_page(username):
     posts = get_posts()
+    bookmarks = get_bookmarks()
     posts_list = []
     for post in posts:
         if post['poster_name'] == username:
             posts_list.append(post)
     if posts_list:
-        return render_template('user-feed.html', posts=posts_list)
+        return render_template('user-feed.html', posts=posts_list, bookmarks=bookmarks)
     return 'Not found', 404
 
 
 @app.route('/tag/<tagname>/')
 def tag_page(tagname):
     posts = get_posts()
+    bookmarks = get_bookmarks()
     posts_list = []
     for post in posts:
         if ('#' + tagname + ' ') in post['content']:
             posts_list.append(post)
     if posts_list:
-        return render_template('tag.html', posts=posts_list)
+        return render_template('tag.html', posts=posts_list, bookmarks=bookmarks)
     return 'Not found', 404
 
 
