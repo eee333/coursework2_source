@@ -9,7 +9,8 @@ app = Flask(__name__)
 @app.route('/')
 def main_page():
     posts = get_posts()
-    return render_template('index.html', posts=posts)
+    bookmarks = get_bookmarks()
+    return render_template('index.html', posts=posts, bookmarks=bookmarks)
 
 
 @app.route('/posts/<int:post_id>/')
@@ -69,8 +70,18 @@ def add_bookmark(post_id):
     bookmarks.append(post_id)
     with open('data/bookmarks.json', 'w', encoding="utf-8") as f:
         json.dump(bookmarks, f)
-
     return redirect('/', code=302)
+
+
+@app.route('/bookmarks/remove/<int:post_id>/')
+def del_bookmark(post_id):
+    with open('data/bookmarks.json', encoding="utf-8") as f:
+        bookmarks = json.load(f)
+    bookmarks.remove(post_id)
+    with open('data/bookmarks.json', 'w', encoding="utf-8") as f:
+        json.dump(bookmarks, f)
+    return redirect('/', code=302)
+
 
 if __name__ == '__main__':
     app.run(debug=True)
