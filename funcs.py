@@ -60,3 +60,8 @@ def cut_comment(txt):
         comment_short = comment_short[:comment_short.rfind(' ')]
     return comment_short
 
+
+def get_bookmarks():
+    with open('data/bookmarks.json', encoding="utf-8") as f:
+        bookmarks = json.load(f)
+        return bookmarks
