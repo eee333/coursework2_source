@@ -1,6 +1,6 @@
 # Курс 2. Курсовая. свой Instagram с едой, котами и еще раз едой!
 
-from flask import Flask, request, render_template
+from flask import Flask, request, render_template, redirect
 from funcs import *
 
 app = Flask(__name__)
@@ -62,6 +62,15 @@ def tag_page(tagname):
     return 'Not found', 404
 
 
+@app.route('/bookmarks/add/<int:post_id>/')
+def add_bookmark(post_id):
+    with open('data/bookmarks.json', encoding="utf-8") as f:
+        bookmarks = json.load(f)
+    bookmarks.append(post_id)
+    with open('data/bookmarks.json', 'w', encoding="utf-8") as f:
+        json.dump(bookmarks, f)
+
+    return redirect('/', code=302)
 
 if __name__ == '__main__':
     app.run(debug=True)
